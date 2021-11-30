@@ -1,0 +1,20 @@
+FROM public.ecr.aws/lambda/nodejs:14
+
+RUN yum install -y \
+	openssh \
+	git \
+	g++ \
+	gcc-c++ \
+	libgcc \
+	libstdc++ \
+	linux-headers \
+	make \
+	python
+
+RUN curl -O https://lambda-insights-extension.s3-ap-northeast-1.amazonaws.com/amazon_linux/lambda-insights-extension.rpm && \
+	rpm -U lambda-insights-extension.rpm && \
+	rm -f lambda-insights-extension.rpm
+
+COPY src/handlers/lambda-2.js package.json ./
+
+RUN npm install

@@ -1,0 +1,42 @@
+service: pruebas-actions
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  profile: pruebas
+  timeout: 30 # API Gateway is limited to 30 seconds
+  region: ${opt:region, 'us-west-2'}
+  stage: ${opt:stage, 'qa'}
+  environment: ${file(env/.env.${self:provider.stage}.yml):}
+  deploymentBucket:
+    name: pruebas-deployments-${self:provider.stage}
+  logRetentionInDays: 90
+  versionFunctions: false
+  logs:
+    restApi: true
+  iam:
+    role:
+      managedPolicies:
+        - 'arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy' # enables lambda insights
+  ecr:
+    images:
+      latest:
+        path: ./
+        file: Dockerfile.deploy
+functions:
+  lambda-2:
+    image:
+      name: latest
+      command:
+        - lambda-2.handler
+    events:
+      - http:
+          path: /segment
+          method: post
+package:
+  excludeDevDependencies: true
+  exclude:
+    - .env.*
+    - git_key
+    - node_modules/**

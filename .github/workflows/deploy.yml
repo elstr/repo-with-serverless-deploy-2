@@ -3,10 +3,16 @@ on:
   repository_dispatch:
     types: [changes-in-api]
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['14']
+    name: Node ${{ matrix.node }} sample
     steps:
       - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
         with:
-          branch: ${{ github.event.client_payload.branch }}
-      - run: echo ${{ github.event.client_payload.branch }}
+          node-version: ${{ matrix.node }}
+      - run: npm run deploy:${{ github.event.client_payload.branch }}
