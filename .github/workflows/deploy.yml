@@ -13,12 +13,12 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v2
         
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-          aws-region: ${{ secrets.AWS_REGION }}
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      #     aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Setup node
         uses: actions/setup-node@v2
@@ -27,5 +27,8 @@ jobs:
 
       - run: echo ${{ secrets.DB_HOST }}
       - run: echo ${{ secrets.DB_USER }}
-      - run: npm run deploy:${{ github.event.client_payload.branch }}
+      - run: echo ${{ secrets.AWS_ACCESS_KEY_ID }}
+      - run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: echo ${{ secrets.AWS_REGION }}
+      # - run: npm run deploy:${{ github.event.client_payload.branch }}
     
