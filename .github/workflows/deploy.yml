@@ -1,4 +1,4 @@
-name: Deploy lambda
+name: Deploy lambda if changes in api
 on:
   repository_dispatch:
     types: [changes-in-api]
@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node: ['14']
-    name: Node ${{ matrix.node }} sample
+    name: Deploy lambda
     steps:
       - name: checkout code
         uses: actions/checkout@v2
@@ -24,5 +24,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
+
+      - run: echo ${{ secrets.DB_HOST }}
+      - run: echo ${{ secrets.DB_USER }}
       - run: npm run deploy:${{ github.event.client_payload.branch }}
     
