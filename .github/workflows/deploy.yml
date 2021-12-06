@@ -25,10 +25,15 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - run: echo ${{ secrets.DB_HOST }}
-      - run: echo ${{ secrets.DB_USER }}
-      - run: echo ${{ secrets.AWS_ACCESS_KEY_ID }}
-      - run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - run: echo ${{ secrets.AWS_REGION }}
+      - run: echo ${{ github.event.client_payload.branch }}
+      - run: echo ${{ github.ref }}
+      - run: echo ${{ github.base_ref }}
+      # - run: echo ${{ secrets.NODE_ENV }}
+      # - run: echo ${{ secrets.DB_HOST }}
+      # - run: echo ${{ secrets.DB_USER }}
+      # - run: echo ${{ secrets.AWS_ACCESS_KEY_ID }}
+      # - run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # - run: echo ${{ secrets.AWS_REGION }}
+      # - run: echo ${{ secrets.AWS_REGION }}
       # - run: npm run deploy:${{ github.event.client_payload.branch }}
     
