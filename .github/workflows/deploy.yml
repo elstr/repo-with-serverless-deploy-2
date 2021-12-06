@@ -27,7 +27,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - run: echo 
       - run: echo ${{ github.ref }}
       - run: echo ${{ github.base_ref }}
       # - run: echo ${{ secrets.NODE_ENV }}
