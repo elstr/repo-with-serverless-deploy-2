@@ -10,10 +10,10 @@ jobs:
         node: ['14']
     name: Deploy lambda
     steps:
-      - name: Checkout to branch where API was merged ( master / qa )
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.client_payload.branch }}
+          path: ${{ github.event.client_payload.branch }}
         
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v1
