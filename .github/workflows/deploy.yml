@@ -10,30 +10,21 @@ jobs:
         node: ['14']
     name: Deploy lambda
     steps:
-      - name: checkout code
+      - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: ${{ github.event.client_payload.branch }}
         
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-      #     aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-
-      - run: echo ${{ github.event.client_payload.branch }}
-      - run: echo ${{ github.ref }}
-      - run: echo ${{ github.base_ref }}
-      # - run: echo ${{ secrets.NODE_ENV }}
-      # - run: echo ${{ secrets.DB_HOST }}
-      # - run: echo ${{ secrets.DB_USER }}
-      # - run: echo ${{ secrets.AWS_ACCESS_KEY_ID }}
-      # - run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      # - run: echo ${{ secrets.AWS_REGION }}
-      # - run: echo ${{ secrets.AWS_REGION }}
-      # - run: npm run deploy:${{ github.event.client_payload.branch }}
+      - run: npm run deploy:${{ github.event.client_payload.branch }}
     

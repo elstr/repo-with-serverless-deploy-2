@@ -7,7 +7,7 @@ provider:
   timeout: 30 # API Gateway is limited to 30 seconds
   region: ${opt:region, 'us-west-2'}
   stage: ${opt:stage, 'qa'}
-  # environment: ${file(env/.env.${self:provider.stage}.yml):}
+  environment: ${file(env/.env.${self:provider.stage}.yml):}
   deploymentBucket:
     name: pruebas-deployments-${self:provider.stage}
   logRetentionInDays: 90
