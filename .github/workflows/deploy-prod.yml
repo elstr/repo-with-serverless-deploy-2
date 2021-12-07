@@ -1,0 +1,29 @@
+name: Deploy lambda if changes in api
+on:
+  repository_dispatch:
+    types: [changes-in-api]
+jobs:
+  deploy_prod:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['14']
+    name: Deploy lambda
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      #     aws-region: ${{ github.event.client_payload.branch == 'qa' && 'us-west-2' ||  'us-east-1'  }}
+      #                 # ${{ secrets.AWS_REGION }}
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm run deploy:production
+    

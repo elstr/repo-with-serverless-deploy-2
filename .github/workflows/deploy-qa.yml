@@ -1,31 +1,25 @@
-name: Deploy lambda if changes in api
+name: Manually triggered workflow
 on:
-  repository_dispatch:
-    types: [changes-in-api]
+  workflow_dispatch:
+    # inputs:
+    #   name:
+    #     description: 'Person to greet'
+    #     required: true
+    #     default: 'Mona the Octocat'
+    #   home:
+    #     description: 'location'
+    #     required: false
+    #     default: 'The Octoverse'
+
 jobs:
-  build:
+  deploy_qa:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node: ['14']
-    name: Deploy lambda
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: qa
-        
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-      #     aws-region: ${{ github.event.client_payload.branch == 'qa' && 'us-west-2' ||  'us-east-1'  }}
-      #                 # ${{ secrets.AWS_REGION }}
-
       - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
       - run: npm run deploy:qa
-    
