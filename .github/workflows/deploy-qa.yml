@@ -35,11 +35,7 @@ jobs:
       - name: Create env file
         run: | # cp sample.env.yml env.yml
           cat > env.yml << EOF
-          ${{secrets.AWS_ACCESS_KEY_ID}}
-          ${{secrets.AWS_REGION}}
-          ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          ${{secrets.DB_HOST}}
-          ${{secrets.DB_USER}}
+          ${{secrets.ENV}}
           EOF
       # - name: Create Dockerfile.deploy file
       #   run: | # cp sample.env.yml env.yml
