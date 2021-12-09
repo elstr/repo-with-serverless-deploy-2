@@ -11,7 +11,7 @@
     "ecr:login:prod": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 375672516152.dkr.ecr.us-east-1.amazonaws.com",
     "ecr:login:qa": "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 375672516152.dkr.ecr.us-west-2.amazonaws.com",
     "deploy:qa": "npm run ecr:login:qa && rm -rf .serverless && npx serverless deploy --stage qa --region us-west-2 --verbose",
-    "deploy:prod": "npm run ecr:login:prod && rm -rf .serverless && npx serverless deploy --stage production --region us-east-1 --verbose"
+    "deploy:production": "npm run ecr:login:prod && rm -rf .serverless && npx serverless deploy --stage production --region us-east-1 --verbose"
   },
   "dependencies": {
     "@sentry/serverless": "^6.9.0",
