@@ -33,7 +33,7 @@ jobs:
           aws-region: us-west-2
 
       - name: Install NPM dependencies
-        run: npm install -g serverless
+        run: npm install -g serverless && npm i -D serverless-dotenv-plugin 
         # run: npm install && npm install -g serverless
 
       - name: Deploy Lambda functions
