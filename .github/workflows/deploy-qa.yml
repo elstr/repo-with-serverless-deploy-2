@@ -37,11 +37,12 @@ jobs:
           cat > env.yml << EOF
           ${{secrets.ENV}}
           EOF
-      # - name: Create Dockerfile.deploy file
-      #   run: | # cp sample.env.yml env.yml
-      #     cat > Dockerfile.deploy << EOF
-      #       ${{secrets.Dockerfile}}
-      #     EOF
+      - name: Create Dockerfile.deploy
+        run: |
+          cat > Dockerfile.deploy << EOF
+          ${{secrets.DOCKER_FILE_DEPLOY}}
+          EOF
+
       - name: Install NPM dependencies
         run: npm install
 

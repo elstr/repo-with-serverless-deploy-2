@@ -6,4 +6,6 @@ exports.handler =  async function(event, context) {
 	console.log('AWS_SECRET_ACCESS_KEY',process.env.AWS_SECRET_ACCESS_KEY)
 	console.log('DB_HOST',process.env.DB_HOST)
 	console.log('DB_USER',process.env.DB_USER)
+	
+	return { statusCode: '200', body: JSON.stringify({ message: 'Success' })  }
 }
