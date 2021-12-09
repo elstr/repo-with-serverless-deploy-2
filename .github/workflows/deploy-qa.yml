@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      # - name: Install Serverless Framework
-      #   run: npm install -g serverless
+      - name: Install Serverless Framework
+        run: npm install -g serverless
 
       - name: Create env file
         run: | # cp sample.env.yml env.yml
