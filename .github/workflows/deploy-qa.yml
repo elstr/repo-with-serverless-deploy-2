@@ -26,32 +26,41 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install Serverless Framework
-        run: npm install -g serverless
+      # - name: Install Serverless Framework
+      #   run: npm install -g serverless
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Create Dockerfile for deployment
+        run: |
+          cat > Dockerfile << EOF
+          ${{secrets.DOCKER_FILE_DEPLOY}}
+          EOF
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      #     aws-region: us-west-2
+
+      - name: Deploy Severless
+        uses: hdev14/sls-deploy-action@main
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-          aws-region: us-west-2
+          awsAccessKeyID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          stage: "qa"
+          region: "us-west-2"
 
       # - name: Serverless AWS authentication
       #   run: sls config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Create env file
-        run: | # cp sample.env.yml env.yml
-          cat > env.yml << EOF
-          ${{secrets.ENV}}
-          EOF
-      - name: Create Dockerfile.deploy
-        run: |
-          cat > Dockerfile.deploy << EOF
-          ${{secrets.DOCKER_FILE_DEPLOY}}
-          EOF
+      # - name: Create env file
+      #   run: | # cp sample.env.yml env.yml
+      #     cat > env.yml << EOF
+      #     ${{secrets.ENV}}
+      #     EOF
 
-      - name: Install NPM dependencies
-        run: npm install
+      # - name: Install NPM dependencies
+      #   run: npm install
 
-      - name: Deploy Lambda functions
-        run: sls deploy --stage qa --region us-west-2 --verbose 
+      # - name: Deploy Lambda functions
+      #   run: sls deploy --stage qa --region us-west-2 --verbose 
