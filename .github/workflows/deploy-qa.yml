@@ -20,8 +20,8 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Create env file
-        run: | # cp sample.env.yml env.yml
-          cat > env.yml << EOF
+        run: | 
+          cat > .env << EOF
           ${{secrets.ENV}}
           EOF
 
@@ -53,4 +53,4 @@ jobs:
         run: npm install && npm install -g serverless
 
       - name: Deploy Lambda functions
-        run: sls deploy --stage qa --region us-west-2 --verbose 
+        run: sls deploy --stage qa --region us-west-2 --verbose

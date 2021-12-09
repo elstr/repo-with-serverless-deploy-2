@@ -32,6 +32,10 @@ functions:
       - http:
           path: /segment
           method: post
+
+plugins:
+  - serverless-dotenv-plugin
+
 package:
   excludeDevDependencies: true
   exclude:
