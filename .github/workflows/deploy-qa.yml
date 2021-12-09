@@ -10,7 +10,7 @@ jobs:
       matrix:
         node: ['14']
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v2
         
       - name: Configure AWS Credentials
@@ -24,11 +24,29 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - run: npm run deploy:qa
+      - run: npm run ecr:login:qa
+        name: Login to AWS ECR QA
+
+      - name: Serverless deploy
+        uses: serverless/github-action@v1
+        with:
+          args: deploy
+          stage: qa
+          region: us-west-2
+          verbose: true
         env:
-            NODE_ENV: 'qa'
-            AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-            AWS_REGION: ${{secrets.AWS_REGION}}
-            AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            DB_HOST: ${{secrets.DB_HOST}}
-            DB_USER: ${{secrets.DB_USER}}
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          NODE_ENV: 'qa'
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_REGION: ${{secrets.AWS_REGION}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          DB_HOST: ${{secrets.DB_HOST}}
+          DB_USER: ${{secrets.DB_USER}}
+      
+      #   env:
+      #       NODE_ENV: 'qa'
+      #       AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+      #       AWS_REGION: ${{secrets.AWS_REGION}}
+      #       AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+      #       DB_HOST: ${{secrets.DB_HOST}}
+      #       DB_USER: ${{secrets.DB_USER}}
