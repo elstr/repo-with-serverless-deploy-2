@@ -34,7 +34,6 @@ jobs:
 
       - name: Install NPM dependencies
         run: npm install -g serverless && npm i -D serverless-dotenv-plugin 
-        # run: npm install && npm install -g serverless
 
       - name: Deploy Lambda functions
-        run: sls deploy --stage qa --region us-west-2 --verbose
+        run: sls deploy --stage qa --region us-west-2 --verbose --force
