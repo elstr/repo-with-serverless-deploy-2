@@ -17,9 +17,7 @@ RUN curl -O https://lambda-insights-extension.s3-ap-northeast-1.amazonaws.com/am
 	rm -f lambda-insights-extension.rpm
 
 COPY src/handlers/lambda-2.js ./
-COPY ./package.json ./
+# COPY ./package.json ./
 COPY ./index.js ./
 
 RUN npm install
-# RUN npm install -g nodemon
-# CMD [ "nodemon" ]

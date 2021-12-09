@@ -1,4 +1,4 @@
-name: Deploy lambda if changes in api
+name: Deploy lambda when changes are merged to Master branch in Journey API
 on:
   repository_dispatch:
     types: [changes-in-api]
