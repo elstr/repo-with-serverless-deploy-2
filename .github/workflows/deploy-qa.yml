@@ -1,5 +1,8 @@
 name: Triggered workflow from POST req
 on:
+  push:
+    branches:
+      - qa
   workflow_dispatch:
 
 jobs:
