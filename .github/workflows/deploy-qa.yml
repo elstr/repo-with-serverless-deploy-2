@@ -25,12 +25,6 @@ jobs:
           ${{secrets.ENV}}
           EOF
 
-      # - name: Create Dockerfile for deployment
-      #   run: |
-      #     cat > Dockerfile << EOF
-      #     ${{secrets.DOCKER_FILE_DEPLOY}}
-      #     EOF
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -39,7 +33,8 @@ jobs:
           aws-region: us-west-2
 
       - name: Install NPM dependencies
-        run: npm install && npm install -g serverless
+        run: npm install -g serverless
+        # run: npm install && npm install -g serverless
 
       - name: Deploy Lambda functions
         run: sls deploy --stage qa --region us-west-2 --verbose
