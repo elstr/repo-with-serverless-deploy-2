@@ -5,13 +5,31 @@ on:
 jobs:
   deploy_prod:
     runs-on: ubuntu-latest
+    environment: production
     strategy:
       matrix:
         node: ['14']
-    name: Deploy lambda
+    env:
+      NODE_ENV: 'qa'
+      AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+      AWS_REGION: ${{secrets.AWS_REGION}}
+      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+      DB_HOST: ${{secrets.DB_HOST}}
+      DB_USER: ${{secrets.DB_USER}}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: master
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm run deploy:production
+    
+
+
 
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v1
@@ -20,10 +38,3 @@ jobs:
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
       #     aws-region: ${{ github.event.client_payload.branch == 'qa' && 'us-west-2' ||  'us-east-1'  }}
       #                 # ${{ secrets.AWS_REGION }}
-
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-      - run: npm run deploy:production
-    
