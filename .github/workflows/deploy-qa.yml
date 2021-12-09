@@ -25,11 +25,11 @@ jobs:
           ${{secrets.ENV}}
           EOF
 
-      - name: Create Dockerfile for deployment
-        run: |
-          cat > Dockerfile << EOF
-          ${{secrets.DOCKER_FILE_DEPLOY}}
-          EOF
+      # - name: Create Dockerfile for deployment
+      #   run: |
+      #     cat > Dockerfile << EOF
+      #     ${{secrets.DOCKER_FILE_DEPLOY}}
+      #     EOF
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -37,17 +37,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
           aws-region: us-west-2
-
-      # - name: Deploy Severless
-      #   uses: hdev14/sls-deploy-action@main
-      #   with:
-      #     awsAccessKeyID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     awsSecretAccessKey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     stage: "qa"
-      #     region: "us-west-2"
-
-      # - name: Serverless AWS authentication
-      #   run: sls config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Install NPM dependencies
         run: npm install && npm install -g serverless
