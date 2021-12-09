@@ -8,8 +8,8 @@
     "docker:test": "docker-compose build --build-arg SSH_PRIVATE_KEY=\"$(cat git_key)\" && docker-compose --project-name event-tracker-service run --service-ports event-tracker-service ash -c \"export NODE_ENV=test && npm run test\"",
     "docker:ci": "docker-compose build --build-arg SSH_PRIVATE_KEY=\"$SSH_PRIVATE_KEY\" && docker-compose --project-name event-tracker-service run --service-ports event-tracker-service ash -c \"export NODE_ENV=test && npm run ci-pipeline\"",
     "ci-pipeline": "npm run lint && npm run test",
-    "ecr:login:prod": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 375672516152.dkr.ecr.us-east-1.amazonaws.com",
-    "ecr:login:qa": "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 375672516152.dkr.ecr.us-west-2.amazonaws.com",
+    "ecr:login:prod": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 312939059436.dkr.ecr.us-east-1.amazonaws.com",
+    "ecr:login:qa": "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 312939059436.dkr.ecr.us-west-2.amazonaws.com",
     "deploy:qa": "npm run ecr:login:qa && rm -rf .serverless && npx serverless deploy --stage qa --region us-west-2 --verbose",
     "deploy:production": "npm run ecr:login:prod && rm -rf .serverless && npx serverless deploy --stage production --region us-east-1 --verbose"
   },
