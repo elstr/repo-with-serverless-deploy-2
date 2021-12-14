@@ -38,8 +38,9 @@ jobs:
       # - name: Install NPM dependencies
       #   run: npm install -g serverless && npm i -D serverless-dotenv-plugin 
 
-      - name: Deploy Lambda functions
-        run: |
-          echo "${{ github.event }}"
-          
-        # run: sls deploy --stage qa --region us-west-2 --verbose --force
+      # - name: Deploy Lambda functions
+      #   run: sls deploy --stage qa --region us-west-2 --verbose --force
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
