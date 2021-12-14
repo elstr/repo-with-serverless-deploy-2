@@ -41,6 +41,5 @@ jobs:
       # - name: Deploy Lambda functions
       #   run: sls deploy --stage qa --region us-west-2 --verbose --force
       - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
+          # GITHUB_CONTEXT: ${{ toJSON(github.event) }}
+        run: echo ${{github.event_name}}
