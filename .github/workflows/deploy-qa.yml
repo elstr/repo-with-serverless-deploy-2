@@ -40,7 +40,13 @@ jobs:
 
       # - name: Deploy Lambda functions
       #   run: sls deploy --stage qa --region us-west-2 --verbose --force
-      - name: Dump GitHub context
+      # - name: Dump GitHub context
           # GITHUB_CONTEXT: ${{ toJSON(github.event) }}
         # run: echo ${{github.event_name}}
-        run:  ${{ github.event_name == 'push' && sls deploy --stage qa --region us-west-2 --verbose ||  sls deploy --stage qa --region us-west-2 --verbose --force  }}
+      - name: instala si es un push
+        if: github.event_name == 'push'
+        run: npm install -g serverless && npm i -D serverless-dotenv-plugin 
+        
+      - name: hace echo si es un workflow_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: echo ${{github.event_name}}
