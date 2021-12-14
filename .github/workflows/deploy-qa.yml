@@ -42,4 +42,5 @@ jobs:
       #   run: sls deploy --stage qa --region us-west-2 --verbose --force
       - name: Dump GitHub context
           # GITHUB_CONTEXT: ${{ toJSON(github.event) }}
-        run: echo ${{github.event_name}}
+        # run: echo ${{github.event_name}}
+        run:  ${{ github.event_name == 'push' && sls deploy --stage qa --region us-west-2 --verbose ||  sls deploy --stage qa --region us-west-2 --verbose --force  }}
