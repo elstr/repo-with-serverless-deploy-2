@@ -40,6 +40,6 @@ jobs:
 
       - name: Deploy Lambda functions
         run: |
-          echo "${{ github.event.type }}"
+          echo "${{ github.event }}"
           
         # run: sls deploy --stage qa --region us-west-2 --verbose --force
